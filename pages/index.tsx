@@ -5,14 +5,31 @@ import { Card } from './components/Card'
 import { Layout } from './components/Layout';
 import { getAnimeRecommendations } from '../@core/services/recommendation';
 import { Recommendation } from '../@core/interfaces/recommendation';
+import { getAnimeSearch } from '../@core/services/search';
 
 const Home: NextPage = () => {
   
-  const [recList, setRecList] = useState<Recommendation[]>([]);
+  const [recList, setRecList] = useState<Recommendation[] | any[]>([]);
+  const [animeList, setAnimeList] = useState<any[]>([]);
 
   useEffect(() => {
     getAnimeRec();
+    getAnimeList();
   }, []);
+
+  async function getAnimeList() {
+    try {
+      let params = {
+        page: 1,
+        limit: 12,
+        q: '',
+      }
+      const res = await getAnimeSearch(params);
+      setAnimeList(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async function getAnimeRec() {
     try {
@@ -60,7 +77,13 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className='column column-search-list'>
-            TEST
+            {
+              animeList.map((anime, index) => (
+                <div key={index} className='card-container'>
+                  <Card cardType='normal' cardData={anime} />
+                </div>
+              ))
+            }
           </div>
         </div>
       </Layout>
