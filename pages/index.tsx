@@ -14,6 +14,7 @@ const Home: NextPage = () => {
   const [recList, setRecList] = useState<Recommendation[] | any[]>([]);
   const [animeList, setAnimeList] = useState<any[]>([]);
 
+  const [isLoadingList, setIsLoadingList] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [statePagination, setStatePagination] = useState<any>({
     currentPage: 1,
@@ -44,6 +45,7 @@ const Home: NextPage = () => {
 
   async function getHomeData() {
     setIsLoading(true);
+    setIsLoadingList(true);
     try {
       await getAnimeRec();
       await getAnimeList();
@@ -51,6 +53,7 @@ const Home: NextPage = () => {
     } catch (error) {
       console.error(error);
       setIsLoading(false);
+      setIsLoadingList(false);
       setStatePagination({
         currentPage: 1,
         totalPage: 0
@@ -59,6 +62,7 @@ const Home: NextPage = () => {
     } finally {
       setTimeout(() => {
         setIsLoading(false);
+        setIsLoadingList(false);
       }, 1000)
     }
   }
@@ -85,7 +89,7 @@ const Home: NextPage = () => {
   }
 
   async function getAnimeListSearch() {
-    setIsLoading(true);
+    setIsLoadingList(true);
     try {
       let params = {
         page: statePagination.currentPage,
@@ -99,10 +103,11 @@ const Home: NextPage = () => {
       });
     } catch (error) {
       console.error(error);
+      setIsLoadingList(false);
 
     } finally {
       setTimeout(() => {
-        setIsLoading(false);
+        setIsLoadingList(false);
       }, 1000)
     }
   }
@@ -178,12 +183,12 @@ const Home: NextPage = () => {
             </div>
           <div className='column column-search-list'>
             {
-              isLoading && skeletonList.map((skeleton, index) => (
+              isLoadingList && skeletonList.map((skeleton, index) => (
                 <div key={index} className='skeleton search-list'></div>
               ))
             }
             {
-              !isLoading && animeList.map((anime, index) => (
+              !isLoadingList && animeList.map((anime, index) => (
                 <div key={index} className='card-container'>
                   <Card cardType='normal' cardData={anime} />
                 </div>

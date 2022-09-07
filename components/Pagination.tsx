@@ -8,11 +8,11 @@ export const Pagination = (props: {
   }
 
   function next() {
-    changePage(props.statePagination.currentPage + 1);
+    changePage(parseInt(props.statePagination.currentPage) + 1);
   }
 
   function prev() {
-    changePage(props.statePagination.currentPage - 1);
+    changePage(parseInt(props.statePagination.currentPage) - 1);
   }
 
 
@@ -29,18 +29,18 @@ export const Pagination = (props: {
       {
         props.statePagination && (
           <>
-            <button onClick={() => prev()} className="btn btn-primary" disabled={props.statePagination.currentPage === 1}>
+            <button onClick={() => prev()} className="btn btn-primary" disabled={parseInt(props.statePagination.currentPage) === 1}>
               Prev
             </button>
-            <select className="form-input" value={props.statePagination.currentPage} onChange={(e) => changePage(e.target.value)}>
+            <select className="form-input" value={parseInt(props.statePagination.currentPage)} onChange={(e) => changePage(e.target.value)}>
               {
-                getArray(props.statePagination.totalPage).map((data, index) => (
+                getArray(parseInt(props.statePagination.totalPage)).map((data, index) => (
                   <option key={index}>{ data }</option>
                 ))
               }
             </select>
             <button onClick={() => next()}
-              className="btn btn-primary" disabled={props.statePagination.currentPage === props.statePagination.totalPage}>
+              className="btn btn-primary" disabled={parseInt(props.statePagination.currentPage) === parseInt(props.statePagination.totalPage)}>
               Next
             </button>
           </>
