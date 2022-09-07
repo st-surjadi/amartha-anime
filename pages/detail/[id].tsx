@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { NextPage } from 'next'
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { getAnimeById, getAnimeCharactersById } from '../../@core/services/anime';
@@ -85,14 +86,23 @@ const AnimeDetail: NextPage = () => {
           animeDetail && (
             <div className='anime-detail-container'>
               <div className='anime-detail'>
+                <div className='btn-back-container'>
+                  <a type='button' className='btn-back' onClick={() => router.back()}>
+                    <span>&#171;</span> Back
+                  </a>
+                </div>
                 <div className='container synopsis-container'>
                   <p className='info-title'>Synopsis</p>
                   <p className='synopsis-data'>{ animeDetail["synopsis"] }</p>
                 </div>
-                <div className='container background-container'>
-                  <p className='info-title'>Background</p>
-                  <p className='synopsis-data'>{ animeDetail["background"] }</p>
-                </div>
+                {
+                  animeDetail["background"] && (
+                    <div className='container background-container'>
+                      <p className='info-title'>Background</p>
+                      <p className='synopsis-data'>{ animeDetail["background"] }</p>
+                    </div>
+                  )
+                }
                 <div className='container character-container'>
                   <p className='info-title'>Characters and Voice Actors</p>
                   <div className='character-grid'>

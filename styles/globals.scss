@@ -132,6 +132,21 @@ button[disabled], button.btn:disabled {
   }
 }
 
+.btn-back-container {
+  margin-bottom: 1rem;
+  a.btn-back {
+    cursor: pointer;
+    margin-bottom: 1rem;
+    font-size: 18px;
+    span {
+      font-size: 28px;
+    }
+    &:hover {
+      color: $clr_primary;
+    }
+  }
+}
+
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
