@@ -23,6 +23,7 @@ const Home: NextPage = () => {
   const inputSearch = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const skeletonList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const skeletonRecommendation = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   
   const onClickSearch = async () => {
     if (statePagination.currentPage === 1) {
@@ -144,7 +145,12 @@ const Home: NextPage = () => {
             <div className='recommendation-container'>
               <h3>Recommendations</h3>
               {
-                recList.map((rec, index) => (
+                isLoading && skeletonRecommendation.map((skeleton, index) => (
+                  <div key={index} className='skeleton recommendation-list'></div>
+                ))
+              }
+              {
+                !isLoading && recList.map((rec, index) => (
                   <div key={index} className="card-container">
                     <Card cardType='recommendation' cardData={rec} />
                   </div>
@@ -153,13 +159,27 @@ const Home: NextPage = () => {
             </div>
           </div>
             <div className='search-bar-column-container'>
-              <Pagination statePagination={statePagination} onChangePage={onChangePage} ></Pagination>
-              <SearchBar inputSearch={inputSearch} onClickSearch={onClickSearch} isLoading={isLoading} />
+              {
+                isLoading && (
+                  <>
+                    <div className='skeleton pagination-search'></div>
+                    <div className='skeleton pagination-search'></div>
+                  </>
+                )
+              }
+              {
+                !isLoading && (
+                  <>
+                    <Pagination statePagination={statePagination} onChangePage={onChangePage} ></Pagination>
+                    <SearchBar inputSearch={inputSearch} onClickSearch={onClickSearch} isLoading={isLoading} />
+                  </>
+                )
+              }
             </div>
           <div className='column column-search-list'>
             {
               isLoading && skeletonList.map((skeleton, index) => (
-                <div key={index} className='skeleton-container'></div>
+                <div key={index} className='skeleton search-list'></div>
               ))
             }
             {

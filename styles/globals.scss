@@ -137,10 +137,21 @@ button[disabled], button.btn:disabled {
     transform: translateX(100%);
   }
 }
-.skeleton-container {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
+.skeleton {
+  &.search-list {
+    width: 100%;
+    height: 100%;
+  }
+  &.recommendation-list {
+    width: 100%;
+    height: 110px;
+    margin-bottom: 1rem;
+  }
+  &.pagination-search {
+    width: 200px;
+    height: 40px;
+  }
+  border-radius: 8px;
   position: relative;
   overflow: hidden;
   background-color: #F2F2F2;
