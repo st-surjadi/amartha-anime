@@ -44,34 +44,32 @@ export const Card = ({
       }
       {
         cardType === "character" && cardData && (
-          <a>
-            <div className="card card-character">
-              <div className="card-image">
-                <img src={cardData["character"]["images"]["webp"]["image_url"]} alt={"char-image"} />
-                <img src={cardData["voice_actors"][0]["person"]["images"]["jpg"]["image_url"]} alt={"actor-image"} />
-              </div>
-              <div className="card-data">
-                <p className="character">
-                  {
-                    cardData["character"]["url"] ? (
-                      <a href={cardData["character"]["url"]} target="_blank" rel="noreferrer" >{ cardData["character"]["name"] }</a>
-                    ) : (
-                      <span>{ cardData["character"]["name"] }</span>
-                    )
-                  }
-                </p>
-                <p className="actor">
-                  {
-                    cardData["voice_actors"][0]["person"]["url"] ? (
-                      <a href={cardData["voice_actors"][0]["person"]["url"]} target="_blank" rel="noreferrer" >{ cardData["voice_actors"][0]["person"]["name"] }</a>
-                    ) : (
-                      <span>{ cardData["voice_actors"][0]["person"]["name"] }</span>
-                    )
-                  }
-                </p>
-              </div>
+          <div className="card card-character">
+            <div className="card-image">
+              <img src={cardData["character"]["images"]["webp"]["image_url"]} alt={"char-image"} />
+              <img src={cardData["voice_actors"][0]["person"]["images"]["jpg"]["image_url"]} alt={"actor-image"} />
             </div>
-          </a>
+            <div className="card-data">
+              <p className="character">
+                {
+                  cardData["character"]["url"] ? (
+                    <a href={cardData["character"]["url"]} target="_blank" rel="noreferrer" >{ cardData["character"]["name"] }</a>
+                  ) : (
+                    <span>{ cardData["character"]["name"] }</span>
+                  )
+                }
+              </p>
+              <p className="actor">
+                {
+                  cardData["voice_actors"][0]["person"]["url"] ? (
+                    <a href={cardData["voice_actors"][0]["person"]["url"]} target="_blank" rel="noreferrer" >{ cardData["voice_actors"][0]["person"]["name"] }</a>
+                  ) : (
+                    <span>{ cardData["voice_actors"][0]["person"]["name"] }</span>
+                  )
+                }
+              </p>
+            </div>
+          </div>
         )
       }
     </div>

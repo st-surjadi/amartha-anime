@@ -7,34 +7,102 @@ import { getAnimeRecommendations } from '../@core/services/recommendation';
 import { Recommendation } from '../@core/interfaces/recommendation';
 import { getAnimeSearch } from '../@core/services/search';
 import { SearchBar } from '../components/SearchBar';
+import { Pagination } from '../components/Pagination';
 
 const Home: NextPage = () => {
   
   const [recList, setRecList] = useState<Recommendation[] | any[]>([]);
   const [animeList, setAnimeList] = useState<any[]>([]);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [statePagination, setStatePagination] = useState<any>({
+    currentPage: 1,
+    totalPage: 0
+  });
+
   const inputSearch = useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  const skeletonList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   
-  const onClickSearch = () => {
-    getAnimeList();
+  const onClickSearch = async () => {
+    if (statePagination.currentPage === 1) {
+      getAnimeListSearch();
+
+    } else {
+      setStatePagination({...statePagination, currentPage: 1});
+    }
   }
 
   useEffect(() => {
-    getAnimeRec();
-    getAnimeList();
+    getHomeData();
   }, []);
+
+  useEffect(() => {
+    getAnimeListSearch();
+  }, [statePagination.currentPage]);
+
+  async function getHomeData() {
+    setIsLoading(true);
+    try {
+      await getAnimeRec();
+      await getAnimeList();
+      
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      setStatePagination({
+        currentPage: 1,
+        totalPage: 0
+      });
+
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000)
+    }
+  }
+
+  const onChangePage = async (page: number) => {
+    setStatePagination({...statePagination, currentPage: page});
+  }
 
   async function getAnimeList() {
     try {
       let params = {
-        page: 1,
+        page: statePagination.currentPage,
         limit: 12,
         q: inputSearch.current.value,
       }
       const res = await getAnimeSearch(params);
       setAnimeList(res.data);
+      setStatePagination({
+        ...statePagination, totalPage: res.pagination.last_visible_page
+      });
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async function getAnimeListSearch() {
+    setIsLoading(true);
+    try {
+      let params = {
+        page: statePagination.currentPage,
+        limit: 12,
+        q: inputSearch.current.value,
+      }
+      const res = await getAnimeSearch(params);
+      setAnimeList(res.data);
+      setStatePagination({
+        ...statePagination, totalPage: res.pagination.last_visible_page
+      });
+    } catch (error) {
+      console.error(error);
+
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000)
     }
   }
 
@@ -85,11 +153,17 @@ const Home: NextPage = () => {
             </div>
           </div>
             <div className='search-bar-column-container'>
-              <SearchBar inputSearch={inputSearch} onClickSearch={onClickSearch} />
+              <Pagination statePagination={statePagination} onChangePage={onChangePage} ></Pagination>
+              <SearchBar inputSearch={inputSearch} onClickSearch={onClickSearch} isLoading={isLoading} />
             </div>
           <div className='column column-search-list'>
             {
-              animeList.map((anime, index) => (
+              isLoading && skeletonList.map((skeleton, index) => (
+                <div key={index} className='skeleton-container'></div>
+              ))
+            }
+            {
+              !isLoading && animeList.map((anime, index) => (
                 <div key={index} className='card-container'>
                   <Card cardType='normal' cardData={anime} />
                 </div>

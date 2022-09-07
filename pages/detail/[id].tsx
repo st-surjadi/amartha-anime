@@ -9,8 +9,6 @@ import { Layout } from '../../components/Layout';
 
 const AnimeDetail: NextPage = () => {
  
-  const router = useRouter()
-  const { id } = router.query;
   const [animeDetail, setAnimeDetail] = useState<any>(null);
   const [animeCharacters, setAnimeCharacters] = useState<any>(null);
   const statisticInfo = [
@@ -35,8 +33,15 @@ const AnimeDetail: NextPage = () => {
     { label: 'Rating', key: 'rating', type: 'normal' },
   ];
 
-  useEffect(() => {
+  const router = useRouter();
+  const { id } = router.query;
+  useEffect(()=>{
+    if(!router.isReady) return;
     getAnimeDetail();
+
+  }, [router.isReady]);
+
+  useEffect(() => {
   }, [])
 
   async function getAnimeDetail() {
@@ -44,7 +49,6 @@ const AnimeDetail: NextPage = () => {
     try {
       const res = await getAnimeById(id);
       setAnimeDetail(res.data);
-      console.log(res.data);
     } catch (error) {
       console.error(error);
       runFinally = false;
@@ -67,7 +71,6 @@ const AnimeDetail: NextPage = () => {
       }
       list.sort((a,b) => (b.favorites - a.favorites));
       setAnimeCharacters(list);
-      console.log(list);
     } catch (error) {
       console.error(error);
       runFinally = false;

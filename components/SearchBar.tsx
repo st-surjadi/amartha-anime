@@ -3,6 +3,7 @@ import React, { useRef } from "react"
 export const SearchBar = (props: { 
   inputSearch: any; 
   onClickSearch: any;
+  isLoading: boolean;
 }) => {
 
   const onChangeInputSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,7 +14,9 @@ export const SearchBar = (props: {
   }
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    props.onClickSearch();
+    if (!props.isLoading) {
+      props.onClickSearch();
+    }
   }
 
   return (
@@ -22,7 +25,7 @@ export const SearchBar = (props: {
         props.inputSearch && (
           <form autoComplete="off" onSubmit={handleSubmit}>
             <input className="form-input" type={'text'} ref={props.inputSearch} onChange={(e) => onChangeInputSearch(e)}
-              placeholder="Search"
+              placeholder="Search" disabled={props.isLoading}
             />
             <a className="btn-search" type="button"><img src="/images/searchbar-icon.png" alt="search-icon" onClick={props.onClickSearch} /></a>
           </form>
