@@ -1,16 +1,23 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
-import { Card } from './components/Card'
-import { Layout } from './components/Layout';
+import { useEffect, useRef, useState } from 'react'
+import { Card } from '../components/Card'
+import { Layout } from '../components/Layout';
 import { getAnimeRecommendations } from '../@core/services/recommendation';
 import { Recommendation } from '../@core/interfaces/recommendation';
 import { getAnimeSearch } from '../@core/services/search';
+import { SearchBar } from '../components/SearchBar';
 
 const Home: NextPage = () => {
   
   const [recList, setRecList] = useState<Recommendation[] | any[]>([]);
   const [animeList, setAnimeList] = useState<any[]>([]);
+
+  const inputSearch = useRef() as React.MutableRefObject<HTMLInputElement>;
+  
+  const onClickSearch = () => {
+    getAnimeList();
+  }
 
   useEffect(() => {
     getAnimeRec();
@@ -22,7 +29,7 @@ const Home: NextPage = () => {
       let params = {
         page: 1,
         limit: 12,
-        q: '',
+        q: inputSearch.current.value,
       }
       const res = await getAnimeSearch(params);
       setAnimeList(res.data);
@@ -42,7 +49,8 @@ const Home: NextPage = () => {
           list.push({
             title: res.data[i].entry[0].title,
             image: res.data[i].entry[0].images.jpg,
-            description: content.charAt(0).toUpperCase() + content.slice(1)
+            description: content.charAt(0).toUpperCase() + content.slice(1),
+            mal_id: res.data[i].entry[0].mal_id
           });
         }
         if (list.length === 10) {
@@ -76,6 +84,9 @@ const Home: NextPage = () => {
               }
             </div>
           </div>
+            <div className='search-bar-column-container'>
+              <SearchBar inputSearch={inputSearch} onClickSearch={onClickSearch} />
+            </div>
           <div className='column column-search-list'>
             {
               animeList.map((anime, index) => (

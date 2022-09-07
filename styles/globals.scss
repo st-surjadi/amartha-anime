@@ -28,6 +28,7 @@ h3 {
 p {
   font-family: $ff_asap;
   font-size: 16px;
+  line-height: 24px;
 }
 
 input.form-input {
@@ -82,12 +83,16 @@ input.form-input {
 }
 
 .search-bar-container {
-  input.form-input {
-    padding-left: 2.25rem;
-    background-image: url('/images/searchbar-icon.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position-x: left;
+  position: relative;
+  a.btn-search {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    img {
+      width: 36px;
+      height: 36px;
+    }
   }
 }
 
@@ -155,12 +160,40 @@ input.form-input {
       }
     }
   }
+  &.card-character {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    img {
+      width: 50%;
+      height: 400px;
+      object-fit: cover; 
+    }
+    .card-data {
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      background-color: rgba(0, 0, 0, .75);
+      padding: .5rem;
+      bottom: 0;
+      width: 100%;
+      p { 
+        color: $clr_primary_white;
+        a {
+          color: $clr_primary_white;
+          &:hover {
+            color: $clr_primary;
+          }
+        }
+      }
+    }
+  }
   &.card-recommendation {
     display: flex;
     .card-image {
       border-radius: 8px;
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 110px;
       overflow: hidden;
       img {
         display: block;
@@ -173,12 +206,13 @@ input.form-input {
     }
     .card-body {
       padding: 0 .5rem;
-
+      
       .card-title {
         width: 180px;
         white-space: nowrap;
         overflow-x: hidden;
         text-overflow: ellipsis;
+        margin-bottom: .5rem;
       }
       .card-description {
         width: 180px;
@@ -213,9 +247,15 @@ input.form-input {
   grid-template-columns: 300px auto auto;
   grid-gap: 1rem;
   .column-recommendation {
+    grid-row: 1 / span 2;
     @media only screen and (max-width: 720px) {
       display: none;
     }
+  }
+  .search-bar-column-container {
+    grid-column: 2 / span 2;
+    display: flex;
+    justify-content: flex-end;
   }
   .column-search-list {
     grid-column: 2 / span 2;
@@ -235,7 +275,52 @@ input.form-input {
       margin-bottom: 0.5rem;
     }
     h3 {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+.detail-container {
+  .anime-detail-container {
+    display: grid;
+    grid-template-columns: minmax(480px, auto) 300px;
+    grid-gap: 1rem;
+    .info-title {
+      font-family: $ff_righteous;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid $clr_primary_black;
+      margin-bottom: .5rem;
+      font-size: 20px;
+    }
+    .container {
       margin-bottom: 1rem;
+      &.anime-image-container {
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+      .row-info {
+        margin-bottom: .25rem;
+        .label {
+          font-weight: 600;
+        }
+        .data {
+          display: inline;
+        }
+      }
+    }
+    .character-grid {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 1rem;
+      margin-top: 1rem;
+      @media only screen and (max-width: 1020px) {
+        grid-template-columns: auto;
+      }
+      .card-container {
+        width: 100%;
+      }
     }
   }
 }
