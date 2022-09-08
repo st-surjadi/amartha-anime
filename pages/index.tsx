@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useRef, useState } from 'react'
@@ -151,7 +152,7 @@ const Home: NextPage = () => {
               <h3>Recommendations</h3>
               {
                 isLoading && skeletonRecommendation.map((skeleton, index) => (
-                  <div key={index} className='skeleton recommendation-list'></div>
+                  <div key={index} className='skeleton recommendation-list' data-testid="skeleton-recommendation-list"></div>
                 ))
               }
               {
@@ -167,8 +168,8 @@ const Home: NextPage = () => {
               {
                 isLoading && (
                   <>
-                    <div className='skeleton pagination-search'></div>
-                    <div className='skeleton pagination-search'></div>
+                    <div className='skeleton pagination-search' data-testid="skeleton-pagination-search"></div>
+                    <div className='skeleton pagination-search' data-testid="skeleton-pagination-search"></div>
                   </>
                 )
               }
@@ -184,7 +185,7 @@ const Home: NextPage = () => {
           <div className='column column-search-list'>
             {
               isLoadingList && skeletonList.map((skeleton, index) => (
-                <div key={index} className='skeleton search-list'></div>
+                <div key={index} className='skeleton search-list' data-testid="skeleton-search-list"></div>
               ))
             }
             {
