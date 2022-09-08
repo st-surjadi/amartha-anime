@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { NextPage } from 'next'
-import Image from 'next/image';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { getAnimeById, getAnimeCharactersById } from '../../@core/services/anime';
@@ -81,6 +81,13 @@ const AnimeDetail: NextPage = () => {
 
   return (
     <div className='detail-container'>
+      <Head>
+        <title>{ animeDetail ? animeDetail["title"] : 'Amartha Anime | Steven Surjadi' }</title>
+        <link rel="icon" href="/favicon.ico" />
+
+        <meta property="og:title" content={ animeDetail ? animeDetail["title"] : 'Amartha Anime | Steven Surjadi' } />
+        <meta property="og:image" content={ animeDetail ? animeDetail["images"]["webp"]["large_image_url"] : '/favicon.io' } />
+      </Head>
       <Layout>
         {
           animeDetail && (

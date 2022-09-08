@@ -77,7 +77,7 @@ const Home: NextPage = () => {
       let params = {
         page: statePagination.currentPage,
         limit: 12,
-        q: inputSearch.current.value,
+        q: inputSearch.current && inputSearch.current.value ? inputSearch.current.value : '',
       }
       const res = await getAnimeSearch(params);
       setAnimeList(res.data);
@@ -95,7 +95,7 @@ const Home: NextPage = () => {
       let params = {
         page: statePagination.currentPage,
         limit: 12,
-        q: inputSearch.current.value,
+        q: inputSearch.current && inputSearch.current.value ? inputSearch.current.value : '',
       }
       const res = await getAnimeSearch(params);
       setAnimeList(res.data);
