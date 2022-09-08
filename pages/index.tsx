@@ -144,6 +144,9 @@ const Home: NextPage = () => {
       <Head>
         <title>Amartha Anime | Steven Surjadi</title>
         <link rel="icon" href="/favicon.ico" />
+
+        <meta property="og:title" content={ 'Amartha Anime | Steven Surjadi' } />
+        <meta property="og:image" content={ '/favicon.io' } />
       </Head>
       <Layout>
         <div className='home-container'>
