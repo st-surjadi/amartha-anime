@@ -37,6 +37,8 @@ export const apiService = setupCache(
     cachePredicate: {
       statusCheck: (status) => status >= 200 && status < 400
     },
+
+    
   }
 
 ) 
