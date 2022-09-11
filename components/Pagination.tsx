@@ -1,6 +1,7 @@
 export const Pagination = (props: { 
   statePagination: any,
-  onChangePage: any
+  onChangePage: any,
+  isLoading: any
 }) => {
 
   function changePage(e: any) {
@@ -29,10 +30,10 @@ export const Pagination = (props: {
       {
         props.statePagination && (
           <>
-            <button onClick={() => prev()} className="btn btn-primary" disabled={parseInt(props.statePagination.currentPage) === 1}>
+            <button onClick={() => prev()} className="btn btn-primary" disabled={parseInt(props.statePagination.currentPage) === 1 || props.isLoading}>
               Prev
             </button>
-            <select className="form-input" value={parseInt(props.statePagination.currentPage)} onChange={(e) => changePage(e.target.value)}>
+            <select disabled={props.isLoading} className="form-input" value={parseInt(props.statePagination.currentPage)} onChange={(e) => changePage(e.target.value)}>
               {
                 getArray(parseInt(props.statePagination.totalPage)).map((data, index) => (
                   <option key={index}>{ data }</option>
@@ -40,7 +41,7 @@ export const Pagination = (props: {
               }
             </select>
             <button onClick={() => next()}
-              className="btn btn-primary" disabled={parseInt(props.statePagination.currentPage) === parseInt(props.statePagination.totalPage)}>
+              className="btn btn-primary" disabled={parseInt(props.statePagination.currentPage) === parseInt(props.statePagination.totalPage) || props.isLoading}>
               Next
             </button>
           </>

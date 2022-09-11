@@ -179,7 +179,7 @@ const Home: NextPage = () => {
               {
                 !isLoading && (
                   <>
-                    <Pagination statePagination={statePagination} onChangePage={onChangePage} ></Pagination>
+                    <Pagination statePagination={statePagination} onChangePage={onChangePage} isLoading={isLoadingList}></Pagination>
                     <SearchBar inputSearch={inputSearch} onClickSearch={onClickSearch} isLoading={isLoading} />
                   </>
                 )
