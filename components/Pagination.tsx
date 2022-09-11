@@ -33,7 +33,7 @@ export const Pagination = (props: {
             <button onClick={() => prev()} className="btn btn-primary" disabled={parseInt(props.statePagination.currentPage) === 1 || props.isLoading}>
               Prev
             </button>
-            <select disabled={props.isLoading} className="form-input" value={parseInt(props.statePagination.currentPage)} onChange={(e) => changePage(e.target.value)}>
+            <select disabled={props.isLoading} data-testid="select-pagination" className="form-input" value={parseInt(props.statePagination.currentPage)} onChange={(e) => changePage(e.target.value)}>
               {
                 getArray(parseInt(props.statePagination.totalPage)).map((data, index) => (
                   <option key={index}>{ data }</option>

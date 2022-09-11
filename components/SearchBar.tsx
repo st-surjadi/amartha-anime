@@ -25,9 +25,9 @@ export const SearchBar = (props: {
         props.inputSearch && (
           <form autoComplete="off" onSubmit={handleSubmit}>
             <input className="form-input" type={'text'} ref={props.inputSearch} onChange={(e) => onChangeInputSearch(e)}
-              placeholder="Search" disabled={props.isLoading}
+              placeholder="Search" disabled={props.isLoading} data-testid="input-search"
             />
-            <a className="btn-search" type="button"><img src="/images/searchbar-icon.png" alt="search-icon" onClick={props.onClickSearch} /></a>
+            <a className="btn-search" type="submit" data-testid="button-search"><img src="/images/searchbar-icon.png" alt="search-icon" onClick={props.onClickSearch} /></a>
           </form>
         )
       }

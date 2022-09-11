@@ -8,7 +8,7 @@ describe('Layout', () => {
     render(<Layout><div>MockComponent</div></Layout>);
   });
   
-  it("check 'children', 'Header' and 'Footer' component is rendered", () => {
+  it("should check 'children', 'Header' and 'Footer' component is rendered", () => {
     const headerElement = screen.getByText(/ANIMELIST/);
     const footerElement = screen.getByText(/copyright © 2022 amartha anime \| steven surjadi/i);
     const childrenElement = screen.getByText(/mockcomponent/i);

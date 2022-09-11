@@ -7,7 +7,7 @@ describe('Header', () => {
     render(<Header/>);
   });
   
-  it("check 'logo' is rendered", () => {
+  it("should check 'logo' is rendered", () => {
     const el = screen.getByText(/ANIMELIST/);
     expect(el).toBeInTheDocument();
   });

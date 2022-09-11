@@ -8,7 +8,7 @@ describe('Footer', () => {
     render(<Footer/>);
   });
   
-  it("check 'footer text' is rendered", () => {
+  it("should check 'footer text' is rendered", () => {
     const el = screen.getByText(/copyright © 2022 amartha anime \| steven surjadi/i);
     expect(el).toBeInTheDocument();
   });

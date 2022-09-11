@@ -12,12 +12,12 @@ describe('Pagination', () => {
     render(<Pagination isLoading={false} onChangePage={MockOnChangePage} statePagination={MockStatePagination} />);
   });
   
-  it("check 'onChangePage' method to be called after button 'Next' is clicked", () => {
+  it("should check 'onChangePage' method to be called after button 'Next' is clicked", () => {
     fireEvent.click(screen.getByRole('button', { name: 'Next' }));
     expect(MockOnChangePage).toBeCalled();
   });
 
-  it("check 'onChangePage' method to be called after button 'Prev' is clicked", () => {
+  it("should check 'onChangePage' method to be called after button 'Prev' is clicked", () => {
     fireEvent.click(screen.getByRole('button', { name: 'Prev' }));
     expect(MockOnChangePage).toBeCalled();
   });

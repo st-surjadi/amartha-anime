@@ -1,9 +1,10 @@
-import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import Home from '../../pages';
 import { getAnimeRecommendations } from '../../@core/services/recommendation'
 import { getAnimeSearch } from '../../@core/services/search';
-import { act } from 'react-dom/test-utils';
+
+afterEach(cleanup);
 
 jest.mock('../../@core/services/recommendation');
 const MockGetAnimeRecommendations = jest.mocked(getAnimeRecommendations);
@@ -122,9 +123,30 @@ describe('Home', () => {
     render(<Home />);
   });
   
-  it("check 'recommendation-list' and 'search-list' are rendered", async () => {
+  it("should check 'recommendation-list' and 'search-list' are rendered", async () => {
     jest.runAllTimers();
-    const data = await screen.findByTestId('recommendation-list');
-    expect(data).toBeTruthy();
+    await screen.findByTestId('recommendation-list');
+
+    expect(screen.getByTestId('recommendation-list')).toBeInTheDocument();
+  });
+  
+  it("should check current page is changed after pagination is clicked", async () => {
+    jest.runAllTimers();
+    await screen.findByTestId('recommendation-list');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    jest.runAllTimers();
+
+    expect(screen.getByRole('option', { name: '2', selected: true })).toBeTruthy();
+  });
+  
+  it("should check new 'recommendation-list' is rendered after searching method", async () => {
+    jest.runAllTimers();
+    await screen.findByTestId('recommendation-list');
+    fireEvent.change(screen.getByTestId("input-search"), { target: { value: 'mock' } });
+    fireEvent.click(screen.getByTestId("button-search"));
+
+    jest.runAllTimers();
+    await screen.findByTestId('recommendation-list');
   });
 });
