@@ -86,6 +86,8 @@ const Home: NextPage = () => {
       });
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
+      setIsLoadingList(false);
     }
   }
 
@@ -136,6 +138,9 @@ const Home: NextPage = () => {
       
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
+      setIsLoadingList(false);
+
     }
   }
 
@@ -160,7 +165,7 @@ const Home: NextPage = () => {
               }
               {
                 !isLoading && recList.map((rec, index) => (
-                  <div key={index} className="card-container">
+                  <div key={index} className="card-container" data-testid="recommendation-list">
                     <Card cardType='recommendation' cardData={rec} />
                   </div>
                 ))
@@ -193,7 +198,7 @@ const Home: NextPage = () => {
             }
             {
               !isLoadingList && animeList.map((anime, index) => (
-                <div key={index} className='card-container'>
+                <div key={index} className='card-container' data-testid="search-list">
                   <Card cardType='normal' cardData={anime} />
                 </div>
               ))

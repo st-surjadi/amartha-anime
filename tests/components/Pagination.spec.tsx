@@ -9,7 +9,7 @@ describe('Pagination', () => {
   };
   const MockOnChangePage = jest.fn();
   beforeEach(() => {
-    render(<Pagination onChangePage={MockOnChangePage} statePagination={MockStatePagination} />);
+    render(<Pagination isLoading={false} onChangePage={MockOnChangePage} statePagination={MockStatePagination} />);
   });
   
   it("check 'onChangePage' method to be called after button 'Next' is clicked", () => {
